@@ -1,17 +1,23 @@
 <?php
+require_once "Registros.php";
 
-// Nesse arquivo constam alguns exemplos. Caso use um framework, sinta-se livre para substituir esse arquivo.
+header('Content-Type: application/json');
+$data = [];
 
-// Caso não consiga utilizar o SQLite (esperamos que consiga), vamos disponibilizar um array com os dados
-// para ser utilizado como um "database fake" no arquivo registros.php.
+$type = $_REQUEST['type'] ?? null;
+$id = $_REQUEST['id'] ?? 0 ;
+$deleted = $_REQUEST['deleted'] ?? 0; 
 
-// Exemplo de conexão com o SQLite usando PDO (referência: https://www.php.net/manual/pt_BR/ref.pdo-sqlite.php)
+$reg = new Registros;
+$reg ->setId($id);
 
-$pdo = new PDO(
-    'sqlite:../data/db.sq3',
-    '',
-    '',
-    [
-        \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-    ]
-);
+
+if ($type === "duvida") 
+{
+    $reg->setDeleted($deleted);
+    $reg->setType($type);
+
+    $data["registros"] = $reg->filterRegistroType();
+}
+
+die(json_encode($data));

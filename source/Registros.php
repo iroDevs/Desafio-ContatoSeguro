@@ -17,7 +17,7 @@
         return $this->id;
     }
 
-    public function setDelete(int $delete) :void {
+    public function setDeleted(int $delete) :void {
         $this->delete = $delete;
     }
 
@@ -26,7 +26,7 @@
         return $this->delete;
     }
 
-    public function setType(int $type) :void
+    public function setType(string $type) :void
     {
         $this->type = $type;
     }
