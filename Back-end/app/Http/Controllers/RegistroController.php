@@ -19,8 +19,17 @@ class RegistroController extends Controller
         $this->register = $register;
     }
 
-   public function index($typed,$deleted)  {
+   public function index($typed = 'nada',$deleted=0) {
         
+        if ($typed === 'nada') {
+            $retorno = "Complete o endpoint de pesquisa  
+            type : duvida , denuncia, sugestao
+            deleted : 0 (não foram deletados) ou 1 (ja foram deletados) 
+            Exemplo: /registro/duvida/1 
+            ";
+            return $retorno;
+        }
+
         $registro = Registro::where('type', $typed)
 		->where('deleted', $deleted)->get();
            

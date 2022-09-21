@@ -22,7 +22,7 @@ $router->group(['prefix' => 'registro'], function () use ($router) {
    Recurso: registro
    Endpoint: /registro
     */
-   
+   $router->get('/',"RegistroController@index");
     $router->get('/{typed}/{deleted}','RegistroController@index'); 
     
 
