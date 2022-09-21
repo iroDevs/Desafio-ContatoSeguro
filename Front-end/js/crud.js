@@ -58,10 +58,12 @@ class MyCrud {
         return res;
     }
 
-    update(i, map = {}) {
+    update(i, map = {},) {
         //Substitui os valores do objeto pelos campos correspondentes aos de map
         for (let key in map) {
-            this._table[i][key] = key;
+           // Linha estava colocando no lugar do campo o nome da chave ou seja nome: (recebe nome da chave) nome: nome  this._table[i][key] = key;
+            this._table[i][key] = map[key];
+           
         }
         localStorage.setItem("tableCrud", JSON.stringify(this._table));
     }
