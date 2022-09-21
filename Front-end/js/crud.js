@@ -68,9 +68,26 @@ class MyCrud {
         localStorage.setItem("tableCrud", JSON.stringify(this._table));
     }
 
-    delete(i) {
+    delete(i,map= []) {
         //Remove o objeto de posição i da lista
         //TODO Você deve implementar.
+        
+        //Explicação comentada
+      
+        //Primeiro captura a lista salva no localStorage e coverte 
+        let lista = localStorage.getItem('tableCrud')
+        lista = JSON.parse(lista)
+
+        //Ja que possuo o indice exato do click basta informar qual indice a funçao deve remover 
+        //opcional: optei por passar o parametro removido para o console para que haja registro dele mesmo depois de deletado
+        let remove = lista.splice(i,1) //remove 1 elemento no indice i
+        console.log('elemento removido',remove);
+
+       //Vamos trocar a tabela pela lista afinal ambos são a "mesma coisa" porem a lista não possui o elemento que removemos no passo de cima 
+       //por fim salve a nova tabela(lista) no local storage e está tudo certo :)
+        this._table = lista;
+        localStorage.setItem("tableCrud", JSON.stringify(lista));
+        
     }
 
 }
