@@ -1,11 +1,35 @@
 <?php
-//Essa Entidade serve para manipular os dados do sqlite e gerenciar filtragens necessarias
 
-  class Registros {
+namespace App\Http\Controllers;
+use App\Models\Registro;
+use Illuminate\Http\Request;
 
-    private $id;
-    private $delete;
-    private $type;
+
+class RegistroController extends Controller
+{
+    private $typed;
+    private $deleted;
+    private $register;
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct(Registro $register){
+        $this->register = $register;
+    }
+
+   public function index($typed,$deleted)  {
+        
+        $registro = Registro::where('type', $typed)
+		->where('deleted', $deleted)->get();
+           
+        $retorno = json_encode($registro);
+        return  $retorno;
+
+     }
+
+   
 
     public function setId(int $id) :void 
     {
@@ -36,7 +60,7 @@
         return $this->type;
     }
 
-    private function connection()
+  /*  private function connection()
     {
         try{
         $pdo = new PDO(
@@ -53,9 +77,9 @@
         echo $e->getMessage();
     }
         
-    }
+    }*/
 
-    public function filterRegistroType() :array {
+   /* public function filterRegistroType() :array {
         $con = $this->connection();
         $stmt = $con->prepare("SELECT * FROM registros WHERE type = :_type AND deleted = :_deleted");
         $stmt->bindValue(":_type",$this->getType(), \PDO::PARAM_STR);
@@ -66,11 +90,7 @@
         }
         return [];
     }
+*/
 
-
-    
-
-
-  }
-
-
+    //
+}
