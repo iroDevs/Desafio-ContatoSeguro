@@ -11,15 +11,20 @@ use Laravel\Lumen\Auth\Authorizable;
 
 class Registro extends Model implements AuthenticatableContract, AuthorizableContract
 {
+
+    
     use Authenticatable, Authorizable, HasFactory;
 
+    //Desabilita o controle do creat_At e updatede_at assim tenho que gerir manualmente
+    public $timestamps = false;
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'type', 'message','deleted'
+        'type', 'message','deleted',"is_identified","whistleblower_name","whistleblower_birth","created_at"
+
     ];
 
     /**

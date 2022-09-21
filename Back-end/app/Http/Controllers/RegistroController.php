@@ -35,6 +35,49 @@ class RegistroController extends Controller
 
      }
 
+    public function validaRequest($type,$deleted){
+       
+       
+        if ($type === "duvida" || $type=== "denuncia" || $type === "sugestaão") {
+            if ($deleted === 0 || $deleted === 1) {
+                return true;
+            }
+            return false;
+        }
+        return false;
+     }
+
+     public function salvarRegistro(Request $request) {
+
+       
+
+        $verificaRequest = $this->validaRequest($request->type,$request->deleted);
+
+        if (!$verificaRequest) {
+            return 'type ou deleted foram informados incorretamente';
+        }
+        
+        //Como o timeStep na minha models ta deligado o valor do id tem que ser colocado manualmente
+        $ultimoRegistro = Registro::orderBy('id', 'desc')->first();
+        $novoId = $ultimoRegistro->id + 1;
+        $agora = date('d/m/Y H:i');
+    
+        $data = [
+            "id"=> $novoId,
+            "type" => $request->type,
+            "message" =>$request->message,
+            "is_identified" => $request->is_identified ?? 0,
+            "whistleblower_name" => ($request->is_identified ? $request->whistleblower_name : null),
+            "whistleblower_birth" => ($request->is_identified ? $request->whistleblower_birth : null),
+            "deleted" =>$request->deleted,
+            "created_at" =>$agora
+        ];
+
+       $retorno = Registro::firstOrCreate($data);
+
+       return $retorno;
+     }
+
    
 
     public function setId(int $id) :void 
@@ -66,37 +109,5 @@ class RegistroController extends Controller
         return $this->type;
     }
 
-  /*  private function connection()
-    {
-        try{
-        $pdo = new PDO(
-            'sqlite:../data/db.sq3',
-            '',
-            '',
-            [
-                \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-            ]
-        );
-        return $pdo;
-    }
-    catch(PDOException $e){
-        echo $e->getMessage();
-    }
-        
-    }*/
-
-   /* public function filterRegistroType() :array {
-        $con = $this->connection();
-        $stmt = $con->prepare("SELECT * FROM registros WHERE type = :_type AND deleted = :_deleted");
-        $stmt->bindValue(":_type",$this->getType(), \PDO::PARAM_STR);
-        $stmt->bindValue(":_deleted",$this->getDelete(), \PDO::PARAM_INT);
-
-        if($stmt->execute()){
-            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        }
-        return [];
-    }
-*/
-
-    //
+  
 }
