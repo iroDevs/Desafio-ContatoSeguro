@@ -1,6 +1,6 @@
 body:before{
     /*dentro do content fica a url da image */
-    content: url('../img/Busy-People.jpg');
+    content: "";
     position: fixed;
     top: 0;
     left: 0;
@@ -22,7 +22,13 @@ body{
 
 .logo {
     padding-top: 48px;
-    /*o text-aling está sendo sobrescrito pelo padrão do body */
+    display:flex;
+    justify-content: center;
+    /*exite outras maneiras de centralizar o logo como usando o position
+    junto do transform:translate , porem com o flex eu consigo garantir que
+    o logo vai permanecer no centro mesmo se a tela se encurtar
+    */
+    
 }
 
 .container{
