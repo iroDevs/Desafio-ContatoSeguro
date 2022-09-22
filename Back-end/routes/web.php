@@ -32,6 +32,9 @@ $router->group(['prefix' => 'registro'], function () use ($router) {
     $router->get('/',"RegistroController@index");
     $router->get('/{typed}/{deleted}','RegistroController@index'); 
     $router->post('/','RegistroController@salvarRegistro');
+    $router->delete('/{id}','RegistroController@deletarRegistro');
+    $router->put('/{id}','RegistroController@updateRegistro');
+    
 
 });
 

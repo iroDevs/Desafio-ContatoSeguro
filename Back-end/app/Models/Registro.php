@@ -15,15 +15,16 @@ class Registro extends Model implements AuthenticatableContract, AuthorizableCon
     
     use Authenticatable, Authorizable, HasFactory;
 
-    //Desabilita o controle do creat_At e updatede_at assim tenho que gerir manualmente
-    public $timestamps = false;
+    
+    public $timestamps = ["created_at","id"]; //A tabela possui apenas o create_at entao o update at deve ser nulo
+    const UPDATED_AT = null; 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'id','type', 'message','deleted',"is_identified","whistleblower_name","whistleblower_birth","created_at"
+        "id",'type', 'message','deleted',"is_identified","whistleblower_name","whistleblower_birth"
 
     ];
 

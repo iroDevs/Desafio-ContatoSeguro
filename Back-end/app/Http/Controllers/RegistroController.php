@@ -38,7 +38,7 @@ class RegistroController extends Controller
     public function validaRequest($type,$deleted){
       
        
-        if ($type === "duvida" || $type=== "denuncia" || $type === "sugestaão") {
+        if ($type === "duvida" || $type=== "denuncia" || $type === "sugestao") {
             if ($deleted === 0 || $deleted === 1) {
                 return true;
             }
@@ -54,28 +54,55 @@ class RegistroController extends Controller
         $verificaRequest = $this->validaRequest($request->type,$request->deleted);
 
         if (!$verificaRequest) {
-            return 'type ou deleted foram informados incorretamente ou a messagem esta repetida';
+            return 'type ou deleted foram informados incorretamente' ;
         }
         
-        //Como o timeStep na minha models ta deligado o valor do id tem que ser colocado manualmente
-        $ultimoRegistro = Registro::orderBy('id', 'desc')->first();
-        $novoId = $ultimoRegistro->id + 1;
-        $agora = date('d/m/Y H:i');
-    
         $data = [
-            "id"=> $novoId,
             "type" => $request->type,
             "message" =>$request->message,
             "is_identified" => $request->is_identified ?? 0,
             "whistleblower_name" => ($request->is_identified ? $request->whistleblower_name : null),
             "whistleblower_birth" => ($request->is_identified ? $request->whistleblower_birth : null),
             "deleted" =>$request->deleted,
-            "created_at" =>$agora
         ];
 
+    //Caso seja um valor repetido ele irá retornoar o elemento normal sem duplicar no db
        $retorno = Registro::firstOrCreate($data);
 
        return $retorno;
      }
+
+     public function deletarRegistro($id){
+        $res =Registro::where('id',$id)->delete();
+        //1 se houver suceeso e 0 se houver falha
+        if ($res === 1) {
+            return "tudo ocorreu bem , registro foi apagado";
+        }
+        
+     }
+     
+     public function updateRegistro(Request $request,$id){
+
+        $verificaRequest = $this->validaRequest($request->type,$request->deleted);
+
+        if (!$verificaRequest) {
+            return 'type ou deleted foram informados incorretamente' ;
+        }
+        
+        $data = [
+            "type" => $request->type,
+            "message" =>$request->message,
+            "is_identified" => $request->is_identified ?? 0,
+            "whistleblower_name" => ($request->is_identified ? $request->whistleblower_name : null),
+            "whistleblower_birth" => ($request->is_identified ? $request->whistleblower_birth : null),
+            "deleted" =>$request->deleted,
+        ];
+       
+        $res = Registro::where('id', $id)->update($data);
+
+      return $res;
+     }
+
+    // 
 
 }
