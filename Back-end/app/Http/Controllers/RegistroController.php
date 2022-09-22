@@ -36,7 +36,7 @@ class RegistroController extends Controller
      }
 
     public function validaRequest($type,$deleted){
-       
+      
        
         if ($type === "duvida" || $type=== "denuncia" || $type === "sugestaão") {
             if ($deleted === 0 || $deleted === 1) {
@@ -54,7 +54,7 @@ class RegistroController extends Controller
         $verificaRequest = $this->validaRequest($request->type,$request->deleted);
 
         if (!$verificaRequest) {
-            return 'type ou deleted foram informados incorretamente';
+            return 'type ou deleted foram informados incorretamente ou a messagem esta repetida';
         }
         
         //Como o timeStep na minha models ta deligado o valor do id tem que ser colocado manualmente
@@ -78,36 +78,4 @@ class RegistroController extends Controller
        return $retorno;
      }
 
-   
-
-    public function setId(int $id) :void 
-    {
-        $this->id = $id;
-    }
-
-    public function getId() :int
-    {
-        return $this->id;
-    }
-
-    public function setDeleted(int $delete) :void {
-        $this->delete = $delete;
-    }
-
-    public function getDelete() :int 
-    {
-        return $this->delete;
-    }
-
-    public function setType(string $type) :void
-    {
-        $this->type = $type;
-    }
-
-    public function getType() :string 
-    {
-        return $this->type;
-    }
-
-  
 }

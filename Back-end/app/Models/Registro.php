@@ -23,7 +23,7 @@ class Registro extends Model implements AuthenticatableContract, AuthorizableCon
      * @var array
      */
     protected $fillable = [
-        'type', 'message','deleted',"is_identified","whistleblower_name","whistleblower_birth","created_at"
+        'id','type', 'message','deleted',"is_identified","whistleblower_name","whistleblower_birth","created_at"
 
     ];
 
