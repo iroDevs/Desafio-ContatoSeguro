@@ -18,8 +18,8 @@ class RegistroController extends Controller
     public function __construct(Registro $register){
         $this->register = $register;
     }
-
-   public function index($typed = 'todos',$deleted=0) {
+//a parte principal do desafio o filtro de informações
+   public function index($typed = 'todos',$deleted= 0) {
         
         if ($typed === 'todos') {
             $registro = Registro::paginate(10);
@@ -34,7 +34,7 @@ class RegistroController extends Controller
         return  $retorno;
 
      }
-
+//metodo para verificar se o typed e o deleted são validos , é melhor essa verificação ficar no back-end do que no client side
     public function validaRequest($type,$deleted){
       
        
@@ -47,9 +47,8 @@ class RegistroController extends Controller
         return false;
      }
 
-     public function salvarRegistro(Request $request) {
 
-       
+     public function salvarRegistro(Request $request) {
 
         $verificaRequest = $this->validaRequest($request->type,$request->deleted);
 
@@ -72,6 +71,7 @@ class RegistroController extends Controller
        return $retorno;
      }
 
+     //com essa rota podemos apagar os registros de verdade eleminando dados do nosso bd
      public function deletarRegistro($id){
         $res =Registro::where('id',$id)->delete();
         //1 se houver suceeso e 0 se houver falha
@@ -80,7 +80,7 @@ class RegistroController extends Controller
         }
         
      }
-     
+     //com essa rota podemos marcar os registros como deleted 1 ocultando eles com alguma logica no front-end
      public function updateRegistro(Request $request,$id){
 
         $verificaRequest = $this->validaRequest($request->type,$request->deleted);
@@ -88,7 +88,7 @@ class RegistroController extends Controller
         if (!$verificaRequest) {
             return 'type ou deleted foram informados incorretamente' ;
         }
-        
+
         $data = [
             "type" => $request->type,
             "message" =>$request->message,
@@ -102,6 +102,11 @@ class RegistroController extends Controller
 
       return $res;
      }
+
+   public function peguePeloIdRegistro($id){
+    $registro = Registro::where('id', $id)->first();
+    return $registro;
+   }
 
     // 
 
