@@ -7,33 +7,33 @@ use Illuminate\Http\Request;
 
 class RegistroController extends Controller
 {
-    private $typed;
-    private $deleted;
-    private $register;
+   
     /**
      * Create a new controller instance.
      *
      * @return void
      */
     public function __construct(Registro $register){
-        $this->register = $register;
+        
     }
 //a parte principal do desafio o filtro de informações
-   public function index($typed = 'todos',$deleted= 0) {
-        
-        if ($typed === 'todos') {
-            $registro = Registro::paginate(10);
-            $registro = json_encode($registro);
-            return $registro;
-        }
 
-        $registro = Registro::where('type', $typed)
+    public function pegueRegistros(Request $request){
+
+       $typed = $request->query('typed','todos') ;
+       $deleted = $request->query('deleted',0);
+
+       if ($typed === 'todos') {
+        $registro = Registro::where('deleted', $deleted)->paginate(10);
+        return $registro;
+       }
+       
+       $registro = Registro::where('type', $typed)
 		->where('deleted', $deleted)->paginate(10);
-           
-        $retorno = json_encode($registro);
-        return  $retorno;
 
-     }
+       return $registro;
+    }
+
 //metodo para verificar se o typed e o deleted são validos , é melhor essa verificação ficar no back-end do que no client side
     public function validaRequest($type,$deleted){
       
