@@ -31,3 +31,19 @@ Sempre que utilizei banco de dados no Laravel/Lumem eu criava ele pelas migratio
 ### Duvida 3: É pra deletar ou não ?
 
 O campo `deleted` me gerou uma duvida quando eu criasse a rota de `DELETE` ele ia deletar o campo de fato ou alterar essa coluna para 1 , depois de pensar muito resolvi deixar essa função de altera o campo para o metodo `PUT` pois ao meu ver a API seria mais completa desse jeito , podendo deletar de fato a row inteira ou apenas escondela utilizando essa coluna `deleted`
+
+<hr>
+### Como rodar ?
+
+Bom aqui vou dar minha resposta de como colocar esse projeto para rodar , é bom simples basta utilizar o Composer
+
+>Composer install
+
+E logo em seguida abrir um servidor php 
+
+>php -S localhost:8000 -t public
+
+
+### Docs
+
+Não achei necessario fazer a  documentação em Swagger já que a Api é bem pequena , então resolvi criar um outro arquivo MD explicando como os endpoints funcionam
