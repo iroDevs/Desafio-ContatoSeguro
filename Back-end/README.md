@@ -46,4 +46,4 @@ E logo em seguida abrir um servidor php
 
 ### Docs
 
-Não achei necessario fazer a  documentação em Swagger já que a Api é bem pequena , então resolvi criar um outro arquivo MD explicando como os endpoints funcionam
+Não achei necessario fazer a  documentação em Swagger já que a Api é bem pequena , então resolvi criar um outro arquivo MD explicando como os endpoints funcionam , junto com alguns feebacks sobre o processo seletivo , acesse o arquivo Docs.md na Raiz do projeto
