@@ -20,8 +20,14 @@ class RegistroController extends Controller
 
     public function pegueRegistros(Request $request){
 
-       $typed = $request->query('typed','todos') ;
+       $typed = $request->query('typed','todos');
        $deleted = $request->query('deleted',0);
+      
+       $verificaRequest = $this->validaRequest($typed,$deleted);
+
+       if (!$verificaRequest) {
+           return 'type ou deleted foram informados incorretamente' ;
+       }
 
        if ($typed === 'todos') {
         $registro = Registro::where('deleted', $deleted)->paginate(10);
@@ -36,10 +42,9 @@ class RegistroController extends Controller
 
 //metodo para verificar se o typed e o deleted são validos , é melhor essa verificação ficar no back-end do que no client side
     public function validaRequest($type,$deleted){
-      
        
-        if ($type === "duvida" || $type=== "denuncia" || $type === "sugestao") {
-            if ($deleted === 0 || $deleted === 1) {
+        if ($type === "duvida" || $type=== "denuncia" || $type === "sugestao" || $type === "todos") {
+            if ($deleted == 0 || $deleted == 1) {
                 return true;
             }
             return false;
